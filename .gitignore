@@ -1,0 +1,76 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# macOS junk
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node.js
+node_modules/
+
+# Environment and secrets (SECURITY: prevent credential leaks)
+.env
+.env.*
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+.secrets/
+
+# npm authentication (may contain tokens)
+.npmrc
+
+# AWS/Cloud credentials
+.aws/
+.gcloud/
+.azure/
+
+# SSH keys (if accidentally placed in project)
+id_rsa
+id_ed25519
+*.pub
+
+# Temporary and build artifacts
+*.log
+*.tmp
+.cache/
+build/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# API upload data (test files)
+api/_data/
+
+# Generated output files
+results.csv
+softagar_results.csv
+
+# Large test image datasets (use examples/data/ for demos instead)
+tests/HepG2/
+tests/Huh7/
+
+# Legacy/internal files (kept locally, not published)
+project_plan.md

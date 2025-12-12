@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Node
+frontend/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Test data (too large for Docker image)
+tests/
+api/_data/
+
+# Documentation
+*.md
+!README.md
+
+# Misc
+*.log
+.coverage
+.pytest_cache/
+

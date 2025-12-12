@@ -1,0 +1,16 @@
+# Docker Compose for Soft Agar Colony Counter
+# Usage: docker compose up
+# Then visit http://localhost:8000
+
+services:
+  colony-counter:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_DIR=/app/data
+    # Optional: persist uploaded images between container restarts
+    # volumes:
+    #   - ./data:/app/data
+    restart: unless-stopped
+

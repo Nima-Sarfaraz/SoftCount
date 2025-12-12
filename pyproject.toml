@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "softagar-colony-counter"
+version = "0.1.0"
+description = "Reusable engine and helpers for counting colonies in soft agar assays."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Nima Sarfaraz" }]
+# Security: Pin exact versions to prevent supply-chain attacks
+# Update these deliberately after reviewing changelogs
+dependencies = [
+    "numpy==1.26.4",
+    "opencv-python-headless==4.8.1.78",
+    "pillow==10.4.0",
+]
+keywords = ["microscopy", "bioinformatics", "computer-vision"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi==0.115.0",
+    "uvicorn==0.30.6",
+    "python-multipart==0.0.9",
+]
+
+[tool.setuptools.packages.find]
+include = ["softagar*", "api*"]
+
+[project.scripts]
+softagar = "softagar.cli:main"
+
