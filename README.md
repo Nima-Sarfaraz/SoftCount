@@ -225,27 +225,16 @@ See `examples/README.md` for tutorials.
 
 ---
 
-## Security Notice
+## Security & Privacy
 
-This project takes supply-chain security seriously. In light of recent npm ecosystem
-attacks, we've implemented several protective measures:
+This application runs entirely on your local machine — your images are never uploaded to external servers.
 
-### Recommended Deployment Methods (Safest First)
+### Built-in Protections
 
-1. **One-Click Script** (Recommended): Uses pre-built frontend and creates isolated Python venv
-2. **Pre-built frontend**: The `frontend/dist/` directory is committed to git, so non-Node users can run immediately
-3. **Docker**: Runs in an isolated container (convenient for container workflows)
-4. **Local build**: Uses `npm ci` for deterministic installs from lockfile
-
-### Security Measures Implemented
-
-- **Locked dependencies**: All npm packages pinned to exact versions
-- **Deterministic installs**: Start scripts use `npm ci` (not `npm install`)
-- **Install scripts disabled**: `frontend/.npmrc` sets `ignore-scripts=true`
-- **Local-only binding**: Server binds to `127.0.0.1` by default
-
-For more information on npm supply-chain security, see:
-[Snyk's npm security guide](https://snyk.io/blog/ten-npm-security-best-practices/)
+- **Local-only**: Server binds to `127.0.0.1` (not accessible from other computers)
+- **Pre-built frontend**: No need to run `npm install` — we include the compiled files
+- **Locked dependencies**: All packages pinned to exact, verified versions
+- **Isolated environment**: Python runs in its own virtual environment
 
 ---
 
