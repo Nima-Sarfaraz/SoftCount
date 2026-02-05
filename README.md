@@ -10,7 +10,7 @@ Automated colony counting for soft agar assays. Upload your images, adjust detec
 
 If you use Soft Agar Colony Counter in a publication, please cite:
 
-> Sarfaraz, N. (2025). *Soft Agar Colony Counter* (Version 1.0.0) [Software].
+> Sarfaraz, N. (2025). *Soft Agar Colony Counter* (Version 1.0.1) [Software].
 > https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter
 
 BibTeX:
@@ -20,7 +20,7 @@ BibTeX:
   author  = {Sarfaraz, Nima},
   title   = {Soft Agar Colony Counter},
   year    = {2025},
-  version = {1.0.0},
+  version = {1.0.1},
   url     = {https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter}
 }
 ```
