@@ -29,17 +29,10 @@
   gap: var(--space-3);
 }
 
-.app-logo {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--accent), #06b6d4);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--bg-base);
+.app-logo-img {
+  height: 72px;
+  width: auto;
+  margin: -18px 0 -22px 0;
 }
 
 .app-title {

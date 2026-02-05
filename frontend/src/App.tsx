@@ -8,6 +8,7 @@ import {
   updateAnnotationsApi,
   uploadImages,
 } from './api'
+import logo from './assets/Logo.png'
 import CanvasViewer from './components/CanvasViewer'
 import CountsSummary from './components/CountsSummary'
 import ImageList from './components/ImageList'
@@ -341,11 +342,7 @@ function App() {
       {/* Header */}
       <header className="app-header">
         <div className="app-brand">
-          <div className="app-logo">SC</div>
-          <div>
-            <div className="app-title">Soft Agar Colony Counter</div>
-            <div className="app-subtitle">Automated detection & annotation</div>
-          </div>
+          <img src={logo} alt="SoftCount" className="app-logo-img" />
         </div>
 
         <div className={`status-bar ${isLoading ? 'processing' : ''}`}>
