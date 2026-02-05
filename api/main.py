@@ -25,7 +25,7 @@ from PIL import Image
 import numpy as np
 
 app = FastAPI(
-    title="Soft Agar Colony Counter API",
+    title="SoftCount API",
     version="1.0.1",
     description="Expose colony detection over HTTP for web clients or automation.",
 )

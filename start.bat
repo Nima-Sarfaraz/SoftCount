@@ -12,7 +12,7 @@ REM 5. Opens the browser
 setlocal EnableDelayedExpansion
 
 echo ============================================
-echo    Soft Agar Colony Counter - Starting...
+echo         SoftCount - Starting...
 echo ============================================
 echo.
 

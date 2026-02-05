@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping make the Soft Agar Colony Counter useful to more scientists!
+Thanks for helping make SoftCount useful to more scientists!
 This guide covers development setup, architecture, and how to contribute.
 
 ---
