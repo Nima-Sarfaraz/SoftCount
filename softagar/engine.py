@@ -83,12 +83,13 @@ def detect_colonies(
     )
     preprocessed = clahe.apply(gray)
 
-    kernel_sharpen = np.array([[-1, -1, -1], [-1, 10, -1], [-1, -1, -1]])
-    sharpened = cv2.filter2D(preprocessed, -1, kernel_sharpen)
+    # Sharpening step disabled - was reducing faint colony visibility
+    # kernel_sharpen = np.array([[-1, -1, -1], [-1, 10, -1], [-1, -1, -1]])
+    # sharpened = cv2.filter2D(preprocessed, -1, kernel_sharpen)
 
-    _, global_thresh_img = cv2.threshold(sharpened, int(global_thresh), 255, cv2.THRESH_BINARY_INV)
+    _, global_thresh_img = cv2.threshold(preprocessed, int(global_thresh), 255, cv2.THRESH_BINARY_INV)
     adaptive_thresh = cv2.adaptiveThreshold(
-        sharpened,
+        preprocessed,
         255,
         cv2.ADAPTIVE_THRESH_MEAN_C,
         cv2.THRESH_BINARY_INV,
