@@ -11,13 +11,15 @@ const getBaseUrl = (): string => {
     return envUrl.replace(/\/$/, '')
   }
   
-  // If we're on port 8000, assume same-origin (production build served by FastAPI)
-  if (typeof window !== 'undefined' && window.location.port === '8000') {
-    return ''
+  // If we're on Vite dev server ports, connect to API (default port 8000)
+  // Users can set VITE_API_BASE_URL if using a different API port during development
+  if (typeof window !== 'undefined' && ['5173', '4173'].includes(window.location.port)) {
+    return 'http://127.0.0.1:8000'
   }
   
-  // Default for dev server (port 5173) - connect to API on port 8000
-  return 'http://127.0.0.1:8000'
+  // Otherwise, assume we're served by FastAPI (same origin) - use relative URLs
+  // This works with any port the server runs on
+  return ''
 }
 
 const configuredBaseUrl = getBaseUrl()
