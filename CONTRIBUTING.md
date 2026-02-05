@@ -22,8 +22,8 @@ This guide covers development setup, architecture, and how to contribute.
 ### Option 1: Pip (recommended)
 
 ```bash
-git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
-cd Soft-Agar-Colony-Counter
+git clone https://github.com/Nima-Sarfaraz/SoftCount.git
+cd SoftCount
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e ".[api]"

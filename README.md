@@ -11,7 +11,7 @@ Automated colony counting for soft agar assays. Upload your images, adjust detec
 If you use Soft Agar Colony Counter in a publication, please cite:
 
 > Sarfaraz, N. (2025). *Soft Agar Colony Counter* (Version 1.0.1) [Software].
-> https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter
+> https://github.com/Nima-Sarfaraz/SoftCount
 
 BibTeX:
 
@@ -21,7 +21,7 @@ BibTeX:
   title   = {Soft Agar Colony Counter},
   year    = {2025},
   version = {1.0.1},
-  url     = {https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter}
+  url     = {https://github.com/Nima-Sarfaraz/SoftCount}
 }
 ```
 ---
@@ -77,7 +77,7 @@ sudo apt install python3 python3-pip python3-venv
 
 **Option B: Using Git (if you have it installed)**
 ```bash
-git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
+git clone https://github.com/Nima-Sarfaraz/SoftCount.git
 ```
 
 #### Step 3: Run the Application
@@ -88,9 +88,9 @@ git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
 1. Open **Terminal**
 2. Navigate to the folder where you extracted the files:
    ```bash
-   cd ~/Desktop/Soft-Agar-Colony-Counter-master
+   cd ~/Desktop/SoftCount-master
    ```
-   > **Note:** The folder may be named `Soft-Agar-Colony-Counter-master` or `Soft-Agar-Colony-Counter` depending on how you downloaded it.
+   > **Note:** The folder may be named `SoftCount-master` or `SoftCount` depending on how you downloaded it.
 3. Make the script executable (first time only):
    ```bash
    chmod +x start.sh
@@ -115,9 +115,9 @@ git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
 1. Press `Win + R`, type `cmd`, press Enter
 2. Navigate to the folder:
    ```
-   cd C:\Users\YourName\Desktop\Soft-Agar-Colony-Counter-master
+   cd C:\Users\YourName\Desktop\SoftCount-master
    ```
-   > **Note:** The folder may be named `Soft-Agar-Colony-Counter-master` or `Soft-Agar-Colony-Counter` depending on how you downloaded it.
+   > **Note:** The folder may be named `SoftCount-master` or `SoftCount` depending on how you downloaded it.
 3. Run: `start.bat`
 
 </details>
@@ -150,7 +150,7 @@ Docker is a containerization platform that packages the app with all its depende
 
 **Option B: Using Git (if you have it installed)**
 ```bash
-git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
+git clone https://github.com/Nima-Sarfaraz/SoftCount.git
 ```
 
 #### Step 3: Run with Docker
@@ -161,9 +161,9 @@ git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
 1. Open **Terminal**
 2. Navigate to the folder where you extracted the files:
    ```bash
-   cd ~/Desktop/Soft-Agar-Colony-Counter-master
+   cd ~/Desktop/SoftCount-master
    ```
-   > **Note:** The folder may be named `Soft-Agar-Colony-Counter-master` or `Soft-Agar-Colony-Counter` depending on how you downloaded it.
+   > **Note:** The folder may be named `SoftCount-master` or `SoftCount` depending on how you downloaded it.
 3. Run Docker:
    ```bash
    docker compose up
@@ -178,9 +178,9 @@ git clone https://github.com/Nima-Sarfaraz/Soft-Agar-Colony-Counter.git
 1. Press `Win + R`, type `cmd`, press Enter
 2. Navigate to the folder where you extracted the files:
    ```
-   cd C:\Users\YourName\Desktop\Soft-Agar-Colony-Counter-master
+   cd C:\Users\YourName\Desktop\SoftCount-master
    ```
-   > **Note:** The folder may be named `Soft-Agar-Colony-Counter-master` or `Soft-Agar-Colony-Counter` depending on how you downloaded it.
+   > **Note:** The folder may be named `SoftCount-master` or `SoftCount` depending on how you downloaded it.
 3. Run Docker:
    ```
    docker compose up
