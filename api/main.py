@@ -60,19 +60,27 @@ async def upload_images(
         raise HTTPException(status_code=400, detail="No files provided.")
 
     sid = storage.ensure_session(session_id)
-    uploads: List[models.UploadImageInfo] = []
+    new_count = 0
 
     for upload in files:
         data = await upload.read()
         if not data:
             continue
-        image_id = storage.store_image(sid, upload.filename or "upload", data)
-        uploads.append(models.UploadImageInfo(image_id=image_id, filename=upload.filename or image_id))
+        storage.store_image(sid, upload.filename or "upload", data)
+        new_count += 1
 
-    if not uploads:
+    if new_count == 0:
         raise HTTPException(status_code=400, detail="No non-empty files were uploaded.")
 
-    return models.UploadResponse(session_id=sid, images=uploads)
+    # Return all images in the session (not just newly uploaded ones)
+    # so frontend state stays in sync with backend
+    all_records = storage.get_session_records(sid)
+    all_images = [
+        models.UploadImageInfo(image_id=r.image_id, filename=r.filename)
+        for r in all_records
+    ]
+
+    return models.UploadResponse(session_id=sid, images=all_images)
 
 
 @app.get("/image/{image_id}")

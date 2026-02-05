@@ -181,20 +181,19 @@ function App() {
     setIsUploading(true)
     setStatus('Uploading images...')
     try {
+      const previousCount = images.length
       const response = await uploadImages(Array.from(files), sessionId ?? undefined)
       setSessionId(response.session_id)
       setImages(response.images)
-      
-      // Save current params before switching to newly uploaded image
-      if (selectedImageId) {
-        setImageParams((prev) => ({ ...prev, [selectedImageId]: params }))
+
+      const newCount = response.images.length - previousCount
+
+      // Only select a new image if nothing was selected before
+      if (!selectedImageId && response.images.length > 0) {
+        setSelectedImageId(response.images[0].image_id)
       }
-      
-      const firstImageId = response.images[0]?.image_id ?? null
-      // New images don't have saved params yet, so we keep current params
-      // (either defaults or what user had set on previous image)
-      setSelectedImageId(firstImageId)
-      setStatus(`Uploaded ${response.images.length} image(s)`)
+
+      setStatus(`Uploaded ${newCount} image(s)`)
     } catch (error) {
       setStatus(`Upload failed: ${formatError(error)}`)
     } finally {
