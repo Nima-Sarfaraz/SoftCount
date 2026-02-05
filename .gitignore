@@ -74,3 +74,6 @@ tests/Huh7/
 
 # Legacy/internal files (kept locally, not published)
 project_plan.md
+ARCHITECTURE_OVERVIEW.md
+TECHNICAL_ARCHITECTURE.md
+high_level_mermaid_presentation.md

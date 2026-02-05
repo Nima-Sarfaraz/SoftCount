@@ -7,12 +7,15 @@ suited for single-process development workloads.
 
 from __future__ import annotations
 
+import logging
 import mimetypes
 from dataclasses import dataclass, field
 from pathlib import Path
 from threading import Lock
 from typing import Dict, Iterable, List, Sequence
 from uuid import uuid4
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -39,6 +42,27 @@ class Storage:
         self._lock = Lock()
         self._sessions: Dict[str, List[str]] = {}
         self._images: Dict[str, ImageRecord] = {}
+
+        # Clean up orphaned files from previous sessions
+        self._cleanup_on_startup()
+
+    def _cleanup_on_startup(self) -> None:
+        """Remove leftover image files from previous sessions.
+
+        Since session metadata is stored in memory, any files remaining from
+        a previous run are orphaned and can be safely deleted.
+        """
+        count = 0
+        for f in self.base_dir.iterdir():
+            if f.is_file():
+                try:
+                    f.unlink()
+                    count += 1
+                except OSError as e:
+                    logger.warning(f"Failed to remove orphaned file {f}: {e}")
+
+        if count > 0:
+            logger.info(f"Cleaned up {count} orphaned file(s) from previous session")
 
     def ensure_session(self, session_id: str | None = None) -> str:
         """Return a session id, creating one if needed."""
