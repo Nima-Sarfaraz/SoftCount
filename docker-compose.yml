@@ -5,8 +5,9 @@
 services:
   colony-counter:
     build: .
+    # Only reachable from this computer, not from others on the network
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     environment:
       - DATA_DIR=/app/data
     # Optional: persist uploaded images between container restarts
