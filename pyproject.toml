@@ -12,10 +12,13 @@ license = { file = "LICENSE" }
 authors = [{ name = "Nima Sarfaraz" }]
 # Security: Pin exact versions to prevent supply-chain attacks
 # Update these deliberately after reviewing changelogs
+# No single numpy release ships wheels for every supported Python, so it is
+# pinned per Python version (2.2.x: 3.10-3.11, 2.5.x: 3.12+).
 dependencies = [
-    "numpy==1.26.4",
-    "opencv-python-headless==4.8.1.78",
-    "pillow==10.4.0",
+    "numpy==2.2.6; python_version < '3.12'",
+    "numpy==2.5.4; python_version >= '3.12'",
+    "opencv-python-headless==4.13.0.92",
+    "pillow==12.3.0",
 ]
 keywords = ["microscopy", "bioinformatics", "computer-vision"]
 classifiers = [

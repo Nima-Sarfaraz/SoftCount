@@ -1,8 +1,9 @@
 # Generated from pyproject.toml (core + [api] extras)
 # Keep pins in sync with pyproject; review changelogs before bumping.
-numpy==1.26.4
-opencv-python-headless==4.8.1.78
-pillow==10.4.0
+numpy==2.2.6; python_version < "3.12"
+numpy==2.5.4; python_version >= "3.12"
+opencv-python-headless==4.13.0.92
+pillow==12.3.0
 fastapi==0.115.0
 uvicorn==0.30.6
 python-multipart==0.0.9
