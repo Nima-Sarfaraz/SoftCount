@@ -9,98 +9,67 @@ on:
       - 'api/**'
       - 'softagar/**'
       - 'frontend/**'
+      - '.github/workflows/test-windows.yml'
   pull_request:
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
   test-windows:
     runs-on: windows-latest
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14', '3.15']
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Set up Python 3.11
+
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      
+          python-version: ${{ matrix.python-version }}
+
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
-      
-      - name: Verify batch file syntax
-        shell: cmd
+
+      # Run start.bat the way users do: it creates .venv, installs
+      # dependencies and starts the server. stdin is nul so its final
+      # "pause" returns; the server keeps running in the background.
+      - name: Run start.bat end to end
+        shell: pwsh
         run: |
-          echo Checking start.bat exists and is readable...
-          type start.bat > nul
-          echo [OK] Batch file is valid
-      
-      - name: Create and activate virtual environment
-        shell: cmd
-        run: |
-          python -m venv .venv
-          call .venv\Scripts\activate.bat
-          python --version
-          echo [OK] Virtual environment created and activated
-      
-      - name: Install Python dependencies
-        shell: cmd
-        run: |
-          call .venv\Scripts\activate.bat
-          pip install --upgrade pip
-          pip install -e ".[api]"
-          echo [OK] Python dependencies installed
-      
+          Start-Process cmd.exe -ArgumentList '/c', 'start.bat < nul > start.log 2>&1' -WorkingDirectory $PWD -NoNewWindow
+          $ok = $false
+          for ($i = 0; $i -lt 300; $i++) {
+            try {
+              $r = Invoke-WebRequest -Uri "http://127.0.0.1:8000" -UseBasicParsing -TimeoutSec 2
+              if ($r.StatusCode -eq 200) { $ok = $true; break }
+            } catch { }
+            Start-Sleep -Seconds 1
+          }
+          Get-Content start.log
+          if (-not $ok) { throw "start.bat did not bring up the server" }
+          Write-Host "[OK] start.bat started the server"
+
       - name: Verify softagar package
         shell: cmd
         run: |
           call .venv\Scripts\activate.bat
-          python -c "import softagar; print('softagar version:', softagar.__version__ if hasattr(softagar, '__version__') else 'ok')"
-          python -c "from api.main import app; print('FastAPI app loaded')"
+          python --version
+          python -c "import softagar; print('softagar version:', softagar.__version__ if hasattr(softagar, '__version__') else 'ok')" || exit /b 1
+          python -c "from api.main import app; print('FastAPI app loaded')" || exit /b 1
           echo [OK] Package imports work
-      
+
       - name: Build frontend
         shell: cmd
         run: |
           cd frontend
-          npm ci
+          call npm ci || exit /b 1
           set VITE_API_BASE_URL=
-          npm run build
+          call npm run build || exit /b 1
           echo [OK] Frontend built successfully
-      
-      - name: Test server startup
-        shell: pwsh
-        run: |
-          # Activate venv in PowerShell
-          .\.venv\Scripts\Activate.ps1
-          
-          # Start server in background
-          $job = Start-Job -ScriptBlock {
-            Set-Location $using:PWD
-            .\.venv\Scripts\Activate.ps1
-            uvicorn api.main:app --host 127.0.0.1 --port 8000
-          }
-          
-          # Wait for server to start
-          Start-Sleep -Seconds 5
-          
-          # Test if server responds
-          try {
-            $response = Invoke-WebRequest -Uri "http://localhost:8000" -UseBasicParsing -TimeoutSec 10
-            if ($response.StatusCode -eq 200) {
-              Write-Host "[OK] Server responds with status 200"
-            }
-          } catch {
-            Write-Host "[WARNING] Server may not have started in time: $_"
-          }
-          
-          # Clean up
-          Stop-Job $job -ErrorAction SilentlyContinue
-          Remove-Job $job -ErrorAction SilentlyContinue
-          
-          Write-Host "[OK] Server startup test completed"
-
