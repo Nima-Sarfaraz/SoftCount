@@ -256,6 +256,10 @@ kill -9 <PID>
 - Try stopping and re-running `start.sh` or `start.bat`
 
 **Python dependency issues:**
+
+SoftCount is tested on Python 3.10 through 3.15.
+
+On macOS/Linux:
 ```bash
 # Clean reinstall
 rm -rf .venv
@@ -263,6 +267,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[api]"
 ```
+
+On Windows: delete the `.venv` folder inside the SoftCount folder, then run `start.bat` again.
 
 ---
 
