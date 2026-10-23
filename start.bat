@@ -31,6 +31,15 @@ REM Check Python version
 for /f "tokens=*" %%i in ('python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"') do set PYVER=%%i
 echo [OK] Found Python %PYVER%
 
+REM Recreate the virtual environment if it no longer runs, e.g. the Python it
+REM was made with was uninstalled, or if it uses a different Python version
+set VENVVER=
+if exist ".venv" for /f "tokens=*" %%i in ('.venv\Scripts\python.exe -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2^>nul') do set VENVVER=%%i
+if exist ".venv" if not "%VENVVER%"=="%PYVER%" (
+    echo [INFO] Existing virtual environment is broken or uses a different Python - recreating it...
+    rmdir /s /q .venv
+)
+
 REM Create virtual environment if needed
 if not exist ".venv" (
     echo [INFO] Creating virtual environment...
@@ -42,9 +51,18 @@ call .venv\Scripts\activate.bat
 echo [OK] Virtual environment activated
 
 REM Install Python dependencies
+REM Use "python -m pip" because pip.exe on Windows refuses to upgrade itself
 echo [INFO] Installing Python dependencies...
-pip install --quiet --upgrade pip
-pip install --quiet -e ".[api]"
+python -m pip install --quiet --upgrade pip
+python -m pip install --quiet -e ".[api]"
+if %ERRORLEVEL% neq 0 (
+    echo.
+    echo [ERROR] Failed to install Python dependencies - see the messages above.
+    echo SoftCount is tested on Python 3.10 to 3.15. You have Python %PYVER%.
+    echo If the problem persists, delete the .venv folder and run start.bat again.
+    pause
+    exit /b 1
+)
 echo [OK] Python dependencies installed
 
 REM Build frontend if Node.js is available
@@ -64,7 +82,7 @@ if %ERRORLEVEL% equ 0 (
     )
 ) else (
     if exist "frontend\dist" (
-        echo [OK] Using pre-built frontend (recommended for security)
+        echo [OK] Using pre-built frontend ^(recommended for security^)
     ) else (
         echo [WARNING] Node.js not found and no pre-built frontend.
         echo Install Node.js from https://nodejs.org/ to build the frontend.
