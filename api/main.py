@@ -26,7 +26,7 @@ import numpy as np
 
 app = FastAPI(
     title="SoftCount API",
-    version="1.0.1",
+    version="1.0.2",
     description="Expose colony detection over HTTP for web clients or automation.",
 )
 

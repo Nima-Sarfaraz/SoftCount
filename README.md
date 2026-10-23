@@ -10,7 +10,7 @@ Automated colony counting for soft agar assays. Upload your images, adjust detec
 
 If you use SoftCount in a publication, please cite:
 
-> Sarfaraz, N. (2025). *SoftCount* (Version 1.0.1) [Software].
+> Sarfaraz, N. (2026). *SoftCount* (Version 1.0.2) [Software].
 > https://github.com/Nima-Sarfaraz/SoftCount
 
 BibTeX:
@@ -19,8 +19,8 @@ BibTeX:
 @software{sarfaraz2025softagar,
   author  = {Sarfaraz, Nima},
   title   = {SoftCount},
-  year    = {2025},
-  version = {1.0.1},
+  year    = {2026},
+  version = {1.0.2},
   url     = {https://github.com/Nima-Sarfaraz/SoftCount}
 }
 ```
