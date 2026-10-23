@@ -111,6 +111,9 @@ function App() {
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false)
   const [paramsPanelOpen, setParamsPanelOpen] = useState(true)
   const debounceRef = useRef<number | null>(null)
+  // Latest manual edits, read by the debounced live-preview detection whose
+  // closure would otherwise hold edits from an earlier render
+  const manualRef = useRef<ManualMap>({})
 
   const selectedImage = images.find((img) => img.image_id === selectedImageId)
   const currentDetection = selectedImageId ? detections[selectedImageId] : undefined
@@ -126,6 +129,7 @@ function App() {
   }, [currentAnnotation, currentDetection, manualForSelected])
 
   const updateManualFor = (imageId: string, edits: ManualEdits) => {
+    manualRef.current = { ...manualRef.current, [imageId]: edits }
     setManual((prev) => ({ ...prev, [imageId]: edits }))
   }
 
@@ -224,7 +228,7 @@ function App() {
       if (!silent) {
         setStatus(`Detected ${detection.count} colonies`)
       }
-      await syncAnnotations(selectedImageId, manual[selectedImageId] ?? emptyManual, true)
+      await syncAnnotations(selectedImageId, manualRef.current[selectedImageId] ?? emptyManual, true)
     } catch (error) {
       if (!silent) {
         setStatus(`Detection failed: ${formatError(error)}`)
