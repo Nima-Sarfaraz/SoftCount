@@ -27,8 +27,23 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-REM Check Python version
-for /f "tokens=*" %%i in ('python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"') do set PYVER=%%i
+REM Check Python version. PYVER stays empty if "python" is only the Microsoft
+REM Store placeholder that Windows ships when Python is not installed
+set PYVER=
+for /f "tokens=*" %%i in ('python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2^>nul') do set PYVER=%%i
+if "%PYVER%"=="" (
+    echo [ERROR] Python is not installed or not working.
+    echo Please install Python 3.10+ from https://www.python.org/downloads/
+    pause
+    exit /b 1
+)
+python -c "import sys; sys.exit(sys.version_info < (3, 10))"
+if %ERRORLEVEL% neq 0 (
+    echo [ERROR] SoftCount needs Python 3.10 or newer, but found Python %PYVER%.
+    echo Please install a newer Python from https://www.python.org/downloads/
+    pause
+    exit /b 1
+)
 echo [OK] Found Python %PYVER%
 
 REM Recreate the virtual environment if it no longer runs, e.g. the Python it
