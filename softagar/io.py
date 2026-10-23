@@ -10,11 +10,25 @@ import numpy as np
 from PIL import Image
 
 
+def to_rgb(img: Image.Image) -> Image.Image:
+    """Convert a PIL image to 8-bit RGB, rescaling high bit-depth images.
+
+    Pillow clips 16/32-bit images at 255 when converting to RGB, which turns
+    most 16-bit microscopy TIFFs white, so stretch their range to 0-255 first.
+    """
+    if img.mode in ("I", "F") or img.mode.startswith("I;16"):
+        arr = np.asarray(img, dtype=np.float64)
+        lo, hi = float(arr.min()), float(arr.max())
+        scale = 255.0 / (hi - lo) if hi > lo else 0.0
+        img = Image.fromarray(((arr - lo) * scale).astype(np.uint8))
+    return img.convert("RGB")
+
+
 def load_image(path: str | Path) -> np.ndarray:
     """Load an image file into an RGB NumPy array."""
     path = Path(path)
     with Image.open(path) as img:
-        return np.array(img.convert("RGB"))
+        return np.array(to_rgb(img))
 
 
 def save_image(path: str | Path, img: np.ndarray) -> None:

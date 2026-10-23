@@ -106,7 +106,7 @@ def fetch_image_preview(image_id: str) -> StreamingResponse:
         with Image.open(record.path) as im:
             # Convert palette/LA to RGB for consistent rendering
             if im.mode not in ("RGB", "RGBA"):
-                im = im.convert("RGB")
+                im = io_utils.to_rgb(im)
             buf = io.BytesIO()
             im.save(buf, format="PNG")
             buf.seek(0)
